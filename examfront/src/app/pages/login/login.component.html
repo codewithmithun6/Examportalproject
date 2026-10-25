@@ -1,0 +1,52 @@
+<div class="bootstrap-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <mat-card>
+                  <mat-card-content>
+                <div class="container text-center">
+                    <img src="../../../assets/logo.jpg" alt="">
+                </div>
+                <h1 class="text-center">Login Here !!</h1>
+                <!-- {{loginData | json }} -->
+
+                <form (ngSubmit)="formSubmit()">
+                    <!-- username field -->
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>User Name</mat-label>
+                        <input
+                        [(ngModel)]="loginData.userName"
+                        name="userName"
+                        required                        
+                        name="userName"                        
+                        matInput placeholder="Enter here">                                                                     
+                    </mat-form-field>
+
+                     <!-- password field -->
+                     <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>User Password</mat-label>
+                        <input
+                        [(ngModel)]="loginData.password"
+                        name="password" type="password"
+                        required                        
+                        name="password"                        
+                        matInput placeholder="Enter here">                                                                     
+                    </mat-form-field>
+                    
+
+                    <div class="container text-center">
+                        <a [routerLink]="'/signup'" style="margin-right: 20px" mat-button color="accent">New Register ?</a>    
+                        <button type="submit" mat-raised-button color="primary">Login</button>
+                        <button type="reset" style="margin-left: 20px" mat-raised-button color="accent">Clear</button>                          
+                        <a [routerLink]="'/forget-password'" style="margin-left: 20px" mat-button color="warn">Forget Password</a>                   
+
+                    </div>                  
+
+
+                </form>  
+            </mat-card-content>              
+            </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

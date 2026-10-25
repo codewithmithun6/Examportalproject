@@ -1,0 +1,18 @@
+<ngx-ui-loader
+fgsColor="#ff4081" 
+text="Please wait..."
+pbColor="#ff4081"
+[pbThickness]="6" 
+
+></ngx-ui-loader>
+
+
+
+<div ngxUiLoaderBlurred [blur]="6">
+    <!-- This page content will be blurred/frosted when foreground loader is showed -->
+
+    <!-- navbar static -->
+<app-navbar></app-navbar>
+<!-- dynamic content -->
+<router-outlet></router-outlet>
+  </div>

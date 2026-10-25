@@ -1,0 +1,45 @@
+<mat-card>
+    <h1 class="text-center mt20">Please verify your OTP which is sent on your registered email address</h1>
+    <!-- {{ emailAddress | json }} -->
+    
+    <mat-card-content>
+        <div class="bootstrap-wrapper">
+            <div class="row">
+                <div class="col-md-6 offset-md-4">
+                    <form (ngSubmit)="formSubmit()">
+                        <mat-form-field class="w100" appearance="outline">
+                            <mat-label>Enter OTP</mat-label>
+                            <input
+                            autofocus 
+                            type="number" 
+                            name="OTP"                                                       
+                            matInput placeholder="Enter OTP"
+                            [(ngModel)]="OTP"                          
+                            
+                            required
+                            >                            
+                        </mat-form-field>                       
+                       
+
+                        <div class="container text-center mt15">
+                            <button mat-raised-button color="accent">Verify OTP</button>
+                            <a [routerLink]="'/forget-password'" style="margin-left: 20px" mat-raised-button color="warn">Resend</a>
+                        </div>
+
+                        
+
+                    </form>
+
+                    <!-- <div class="container text-center">
+                        
+                        <button style="margin-left: 250px" mat-raised-button color="warn">Resend</button>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+
+

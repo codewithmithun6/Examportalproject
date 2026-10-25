@@ -1,0 +1,12 @@
+.truncate{
+    display: block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.example-header-image {
+    background-image: url('https://www.shutterstock.com/image-vector/clipboard-pen-3d-vector-icon-600w-2145774505.jpg');
+    background-size: cover;
+  }

@@ -1,0 +1,38 @@
+<mat-card>
+    <mat-action-list>
+        <div mat-suheader>Menu</div>
+        <button routerLink="/admin" mat-list-item><mat-icon mat-list-icon>home</mat-icon> Home</button>
+        <button mat-list-item routerLink="/admin/profile">
+            <mat-icon mat-list-icon>account_circle</mat-icon> Profile
+        </button>
+
+        <button mat-list-item routerLink="/admin/categories">
+            <mat-icon mat-list-icon>list</mat-icon> Categories
+        </button>
+
+        <button mat-list-item routerLink="/admin/add-category">
+            <mat-icon mat-list-icon>add_circle_outline</mat-icon> Add Category
+        </button>
+
+        <button mat-list-item routerLink="/admin/quizzes">
+            <mat-icon mat-list-icon>quize</mat-icon> Quizzes
+        </button>
+
+        <button mat-list-item routerLink="/admin/add-quiz">
+            <mat-icon mat-list-icon>add</mat-icon> Add Quize
+        </button>
+
+        <a 
+        (click)="logout()" mat-list-item >
+            <mat-icon mat-list-icon>logout</mat-icon> Logout
+    </a>
+
+        <!-- <a
+(click)="logout()"        
+     mat-icon-button class="example-icon favorite-icon mr40"
+     aria-label="Example icon-button with heart icon">
+      Logout
+</a> -->
+        
+    </mat-action-list>
+</mat-card>
