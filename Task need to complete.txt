@@ -1,0 +1,17 @@
+user end
+----------------
+1. Change password
+2. forget password
+3. update profile
+	First Name
+	Last Name
+	Email id
+	Mobile number
+	Profile picture
+	
+
+-------------
+
+admin side
+-----------
+1. update profile --> not required update profile

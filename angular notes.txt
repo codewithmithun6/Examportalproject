@@ -1,0 +1,87 @@
+Start Anugular implementation from begning
+=============================================
+1. download nodejs and install (https://nodejs.org/en) 
+2. open cmd and check version 
+   2.1) node -v
+   2.2)	npm -v
+3. open angular cli (https://angular.io/cli) and follow the steps
+4. npm install -g @angular/cli
+5. ng --help
+6. ng new --help
+7. open cmd in your project location where you want to create project(eg: D:\SpringBoot project2023\Examportalproject>)
+8. D:\SpringBoot project2023\Examportalproject> ng new examfront
+   Would you like to add Angular routing? Yes
+   Which stylesheet format would you like to use? CSS
+9. cd examfront
+10. ng serve    ----->run the server	
+
+
+11. https://material.angular.io/guide/getting-started  (follow the steps)
+12. D:\SpringBoot project2023\Examportalproject> ng add @angular/material
+
+13. https://github.com/dmhendricks/bootstrap-grid-css    (follow the steps if we have required grid then we can use of this link)
+
+14. npm install bootstrap-grid-only-css --save
+//15. bower install bootstrap4-grid-only 
+
+16. open angular.json and update in styles ("./node_modules/bootstrap-grid-only-css/dist/css/bootstrap-grid-min.css")
+
+ "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "./node_modules/bootstrap-grid-only-css/dist/css/bootstrap-grid.min.css"
+            ],
+
+
+
+Now create two folder inside app (components and pages)
+
+D:\SpringBoot project2023\Examportalproject\examfront\src\app> mkdir components
+D:\SpringBoot project2023\Examportalproject\examfront\src\app> mkdir pages
+
+Create navbar and footer component inside components folder (ng generate component navbar) below is written shortcut
+
+D:\SpringBoot project2023\Examportalproject\examfront\src\app\components> ng g c navbar 
+D:\SpringBoot project2023\Examportalproject\examfront\src\app\components> ng g c footer
+
+create signup and login component inside pages componets
+
+PS D:\SpringBoot project2023\Examportalproject\examfront\src\app\pages> ng g c signup
+PS D:\SpringBoot project2023\Examportalproject\examfront\src\app\pages> ng g c login
+
+
+how to make http request in angular
+
+https://angular.io/guide/http
+
+create one folder inside app name is services and inside services create user service
+D:\SpringBoot project2023\Examportalproject\examfront\src\app> mkdir services
+D:\SpringBoot project2023\Examportalproject\examfront\src\app\services> ng g s user
+
+create home componet inside pages
+PS D:\SpringBoot project2023\Examportalproject\examfront\src\app\pages> ng g c home
+
+https://fonts.google.com/icons?selected=Material+Symbols+Outlined:menu_book:FILL@0;wght@400;GRAD@0;opsz@48&icon.query=book
+
+instead of href we can use routerLink because of in "href" it is reloading the page but in "routerLink" not and we can write both way as written below.
+routerLink="/"
+[routerLink]="'/login'"
+[routerLink]="'/signup'"
+
+
+https://mui.com/material-ui/customization/color/
+
+
+======================================
+
+D:\SpringBoot project2023\Examportalproject\examfront\src\app\services> ng g s login
+
+
+
+PS D:\SpringBoot project2023\Examportalproject\examfront\src\app\pages> ng g c profile
+
+PS D:\SpringBoot project2023\Examportalproject\examfront\src\app\pages\admin> ng g c sidebar
+
+
+PS D:\SpringBoot project2023\Examportalproject\examfront\src\app\pages\admin> ng g c welcome
+

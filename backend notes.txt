@@ -1,0 +1,198 @@
+Now we starting spring security
+================================
+add all below dependency
+
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+
+
+In our project whenever required userDetails then we will pass user because we have implemented user class to useDetails.
+
+
+=============================================
+
+AWS details
+=========================
+codewithmithun6@gmail.com
+Welcome@8877
+
+
+MySQL
+=========
+create user 'examuser'@'%' identified by 'mithun';
+
+grant all privileges on *.* to 'examuser'@'%' with grant option;
+
+flush privileges;
+
+mysql -u examuser -p 
+
+
+
+mvn package -Dmaven.test.skip=true
+
+13.48.16.215
+
+
+
+
+
+========================
+
+cd /etc/systemd/system
+
+vim examportal.service
+ 
+[Unit]
+Description=A Spring Boot Application for examportal
+After=syslog.target
+
+
+[Service]
+User=ubuntu
+ExecStart=/home/ubuntu/project/examportal.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+
+========================
+
+systemctl enable examportal
+systemctl start examportal
+systemctl stop examportal
+systemctl status examportal
+systemctl restart examportal
+
+chmod 777 /home/ubuntu/project/examportal.jar
+
+==================================
+http://13.48.16.215:5151/user/home
+fornend deployment
+---------
+open vscode and open terminal
+ng build
+
+
+connect with awc terminal
+
+apt update
+apt install nginx
+
+
+systemctl enable nginx
+systemctl start nginx
+systemctl stop nginx
+systemctl restart nginx
+systemctl status nginx
+
+cd /etc/nginx/conf.d
+
+vim 13.48.16.215.conf
+cat 13.48.16.215.conf
+
+server {
+  listen 0.0.0.0:80;
+  root /home/ubuntu/project/examfront;
+  server_name 13.48.16.215;
+  location / {
+	root /home/ubuntu/project/examfront;
+	try_files $uri $uri/ /index.html;
+}
+}
+
+
+/home/ubuntu/project/examfront/index.html
+
+==============
+for  without domain config
+----------
+server {
+        listen 80;
+        listen [::]:80;
+        root /home/ubuntu/project/examfront;
+        index index.html;
+        server_name 13.48.16.215;
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+}
+
+not working
+
+
+/var/log/nginx/error.log
+
+
+tail -n 50 /var/log/nginx/error.log
+
+sudo nginx -t
+
+
+Verify DNS settings: If you are using a domain name instead of the IP address (13.48.16.215), ensure that the DNS records are correctly configured to point to your server's IP address. You can use the nslookup or dig command to check the DNS resolution.
+
+For example, to check the DNS resolution for example.com:
+
+Copy code
+nslookup example.com
+
+nslookup 13.48.16.215;
+
+dia 13.48.16.215;
+
+
+
+server {
+        listen 80;
+        listen [::]:80;
+        root /home/ubuntu/project/examfront;
+        index index.html;
+        server_name _;
+        location /{	    	
+            try_files $uri $uri/ /index.html;
+        }
+}
+
+
+
+
+$ scp -r -i key pair.pem backup.sql.gz ec2-user@EC2 DNS:/target_directory/backup.sql.gz
+
+
+take backup from local mysql (Export)
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysqldump -u root -p exam> F:\exam_bkp.sql
+
+import data in AWS EC2 instance
+
+login work bench and connect with AWS mysql database
+
+go to server and click on data import
+
+click self conflict select empty database name and got progress and import data
+
+
+
+
+
+
+
+
+
