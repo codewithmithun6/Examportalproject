@@ -3,14 +3,17 @@ package com.exam.service.impl;
 import com.exam.helper.UserFoundException;
 import com.exam.model.User;
 import com.exam.model.UserRole;
+import com.exam.passwordhandler.ProfileUpdateRequest;
 import com.exam.repository.RoleRepository;
 import com.exam.repository.UserRepository;
+import com.exam.service.ProfilePictureStorageService;
 import com.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.io.IOException;
 import java.util.Set;
 
 @Service
@@ -23,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private ProfilePictureStorageService profilePictureStorageService;
 
     // creating user
     @Override
@@ -84,6 +90,39 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateProfile(String username, ProfileUpdateRequest request) {
+        if (request.getFirstName() == null || request.getFirstName().trim().isEmpty()
+                || request.getLastName() == null || request.getLastName().trim().isEmpty()
+                || request.getEmail() == null || request.getEmail().trim().isEmpty()
+                || request.getPhone() == null || request.getPhone().trim().isEmpty()) {
+            throw new IllegalArgumentException("First name, last name, email, and mobile number are required");
+        }
+        if (!request.getEmail().trim().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+            throw new IllegalArgumentException("Enter a valid email address");
+        }
+
+        User user = userRepository.findByUserName(username);
+        if (user == null) {
+            throw new IllegalArgumentException("User account not found");
+        }
+
+        user.setFirstName(request.getFirstName().trim());
+        user.setLastName(request.getLastName().trim());
+        user.setEmail(request.getEmail().trim());
+        user.setPhone(request.getPhone().trim());
+
+        if (request.getProfilePicture() != null && !request.getProfilePicture().isEmpty()) {
+            try {
+                user.setProfile(profilePictureStorageService.store(request.getProfilePicture()));
+            } catch (IOException ex) {
+                throw new IllegalStateException("Unable to save profile picture", ex);
+            }
+        }
+
         userRepository.save(user);
     }
 

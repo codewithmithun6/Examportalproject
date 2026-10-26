@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -10,49 +11,66 @@ import Swal from 'sweetalert2';
 })
 export class UpdateUserProfileComponent implements OnInit{
 
-  userId=0;
-  user:any;
-  // quesTitle:any;
+  user: any = null;
+  selectedPicture: File | null = null;
+  picturePreview: string | null = null;
+  saving = false;
+
   constructor(
-    private _route: ActivatedRoute,
-    private __user:UserService,
-    private _router:Router
+    private userService: UserService,
+    private loginService: LoginService,
+    private router: Router
   ){}
   ngOnInit(): void {
-
-    this.userId = this._route.snapshot.params['id'];
-    // alert(this.userId);
-    this.__user.getUser(this.userId).subscribe(
-      (data:any)=>{
-        console.log(data);
-        this.user = data;
-        console.log(this.user);
-      },
-      (error)=>{
-        console.log(error);
-      }
-    );
-    
+    this.loginService.getCurrentUser().subscribe({
+      next: (user: any) => this.user = user,
+      error: () => Swal.fire('Error', 'Unable to load your profile.', 'error')
+    });
   }
 
-  // update user form submit
-  // public updateData(){
+  onPictureSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.selectedPicture = input.files?.[0] ?? null;
+    if (this.picturePreview) {
+      URL.revokeObjectURL(this.picturePreview);
+    }
+    this.picturePreview = this.selectedPicture ? URL.createObjectURL(this.selectedPicture) : null;
+  }
 
-  //   // validation     
+  clearForm(pictureInput: HTMLInputElement): void {
+    this.selectedPicture = null;
+    this.picturePreview = null;
+    pictureInput.value = '';
+    this.loginService.getCurrentUser().subscribe((user: any) => this.user = user);
+  }
 
-  //   // alert('test for update');
-  //   this.__user.updateUser(this.user).subscribe(
-  //     (data:any)=>{
-  //       Swal.fire('Success !!','User updated successfully !!','success').then((e)=>{
-  //         // this._router.navigate(['/user-dashboard/user-profile']);
-  //       });
-  //     },
-  //     (error)=>{
-  //       Swal.fire('Error !!','Error while updating the User !!','error');
-  //       console.log(error);
-  //     },
-  //   );
+  updateData(): void {
+    if (!this.user || this.saving) {
+      return;
+    }
 
-  // }
+    const formData = new FormData();
+    formData.append('firstName', this.user.firstName || '');
+    formData.append('lastName', this.user.lastName || '');
+    formData.append('email', this.user.email || '');
+    formData.append('phone', this.user.phone || '');
+    if (this.selectedPicture) {
+      formData.append('profilePicture', this.selectedPicture);
+    }
+
+    this.saving = true;
+    this.userService.updateProfile(formData).subscribe({
+      next: () => {
+        this.saving = false;
+        Swal.fire('Success', 'Your profile has been updated.', 'success')
+          .then(() => this.router.navigate(['/user-dashboard/user-profile']));
+      },
+      error: (error) => {
+        this.saving = false;
+        const message = typeof error.error === 'string' ? error.error : 'Unable to update your profile.';
+        Swal.fire('Update failed', message, 'error');
+      }
+    });
+  }
 
 }

@@ -6,6 +6,7 @@ import com.exam.model.Role;
 import com.exam.model.User;
 import com.exam.model.UserRole;
 import com.exam.passwordhandler.ChangePasswordRequest;
+import com.exam.passwordhandler.ProfileUpdateRequest;
 import com.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -101,6 +102,18 @@ public class UserController {
             return ResponseEntity.ok("Password changed successfully");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @PutMapping(value = "/profile", consumes = "multipart/form-data")
+    public ResponseEntity<String> updateCurrentProfile(@ModelAttribute ProfileUpdateRequest request, Principal principal) {
+        try {
+            userService.updateProfile(principal.getName(), request);
+            return ResponseEntity.ok("Profile updated successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to save profile picture");
         }
     }
 

@@ -5,8 +5,8 @@
         <div class="bootstrap-wrapper">
             <div class="container">
                 <div class="container text-center">
-                    <img src="https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg" 
-                    alt=""
+                    <img [src]="profileImage" 
+                    alt="Profile picture"
                     class="profile-image"
                     >
                     <h1> {{user.firstName}} {{user.lastName}} </h1>
@@ -27,8 +27,12 @@
                             </tr>
 
                             <tr>
-                                <td>Phone</td>
-                                <td>+91 {{user.phone}} </td>
+                                <td>Email</td>
+                                <td>{{user.email}} </td>
+                            </tr>
+                            <tr>
+                                <td>Mobile number</td>
+                                <td>{{user.phone}} </td>
                             </tr>
 
                             <tr>
@@ -49,8 +53,8 @@
     </mat-card-content>
     <div class="text-center ">
         
-            <button [routerLink]="'/user-dashboard/update-user-profile/' + user.id" mat-raised-button disabled color="primary">UPDATE</button>
-            <button class="ml20" mat-raised-button disabled color="accent">SHARE</button>
+            <button [routerLink]="'/user-dashboard/update-user-profile/' + user.id" mat-raised-button color="primary">UPDATE</button>
+            <button class="ml20" mat-raised-button color="accent" (click)="shareProfile()">SHARE</button>
         
     </div>
     
