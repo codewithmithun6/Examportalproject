@@ -28,7 +28,7 @@ export class UserService {
 
   //change user password
   public changePassword(cUser:any){
-    return this.http.put(`${baseUrl}/user/change-password`,cUser);
+    return this.http.put(`${baseUrl}/user/change-password`, cUser, { responseType: 'text' });
 
   }
 }

@@ -26,7 +26,7 @@ public interface UserService {
 
     User getUserById(Long userId);
 
-    public void changePassword(String username, String oldPassword, String newPassword);
+    public void changePassword(String username, String oldPassword, String newPassword, String confirmPassword);
 
 
 }

@@ -65,14 +65,26 @@ public class UserServiceImpl implements UserService {
 
     // change password method
     @Override
-    public void changePassword(String username, String oldPassword, String newPassword) {
-        User user = userRepository.findByUserName(username);
-        if (user != null && user.getPassword().equals(oldPassword)) {
-            user.setPassword(newPassword);
-            userRepository.save(user);
-        } else {
-            throw new IllegalArgumentException("Invalid username or old password");
+    public void changePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+        if (oldPassword == null || oldPassword.trim().isEmpty()
+                || newPassword == null || newPassword.trim().isEmpty()
+                || confirmPassword == null || confirmPassword.trim().isEmpty()) {
+            throw new IllegalArgumentException("All password fields are required");
         }
+        if (!newPassword.equals(confirmPassword)) {
+            throw new IllegalArgumentException("New password and confirmation do not match");
+        }
+        if (oldPassword.equals(newPassword)) {
+            throw new IllegalArgumentException("New password must be different from the old password");
+        }
+
+        User user = userRepository.findByUserName(username);
+        if (user == null || !bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Invalid old password");
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 
 

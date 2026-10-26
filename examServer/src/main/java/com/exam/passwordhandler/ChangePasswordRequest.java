@@ -1,17 +1,9 @@
 package com.exam.passwordhandler;
 
 public class ChangePasswordRequest {
-    private String username;
     private String oldPassword;
     private String newPassword;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    private String confirmPassword;
 
     public String getOldPassword() {
         return oldPassword;
@@ -27,6 +19,14 @@ public class ChangePasswordRequest {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
 

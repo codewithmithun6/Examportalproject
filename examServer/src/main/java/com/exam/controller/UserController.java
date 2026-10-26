@@ -90,24 +90,19 @@ public class UserController {
     }
 
 
-    //change password handler
-//    @PutMapping("/change-password")
-//    public void changePassword(@RequestBody User user) {
-//        System.out.println(user.getPassword());
-//
-//        this.userService.changePassword(user);
-//
-//    }
-
-//Change user password
-@PostMapping("/change-password")
-public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
-    // You may want to perform additional validation and security checks here
-
-    userService.changePassword(request.getUsername(), request.getOldPassword(), request.getNewPassword());
-
-    return ResponseEntity.ok("Password changed successfully");
-}
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request, Principal principal) {
+        try {
+            userService.changePassword(
+                    principal.getName(),
+                    request.getOldPassword(),
+                    request.getNewPassword(),
+                    request.getConfirmPassword());
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
 
 
     @ExceptionHandler(UserFoundException.class)
