@@ -26,6 +26,10 @@ export class UserService {
     return this.http.get(`${baseUrl}/user/${id}`);
   }
 
+  public updateProfile(profile: FormData){
+    return this.http.put(`${baseUrl}/user/profile`, profile, { responseType: 'text' });
+  }
+
   //change user password
   public changePassword(cUser:any){
     return this.http.put(`${baseUrl}/user/change-password`, cUser, { responseType: 'text' });

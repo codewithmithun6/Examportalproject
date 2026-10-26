@@ -1,3 +1,22 @@
 .full-width{
     width: 100%;
 }
+
+.picture-picker {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.profile-image {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.picture-label {
+    cursor: pointer;
+    color: #3f51b5;
+}

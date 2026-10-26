@@ -5,77 +5,45 @@
                 <mat-card>
                     <mat-card-content>
 
-                <div class="container text-center">
-                    <img src="../../../assets/logo.jpg" alt="">
-                </div>
-                <h1 class="text-center">Update Your Profile Here</h1>
-                {{user | json}}
+                <h1 class="text-center">Update Your Profile</h1>
 
-                <form >
-                    <!-- username field -->
-                    <!-- <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>User Name</mat-label>
-                        <input
-                        required 
-                        [(ngModel)]="user.userName"
-                        name="userName"                        
-                        matInput placeholder="Enter here">  
-                        <mat-hint>User name must be unique !!</mat-hint>                                            
-                    </mat-form-field> -->
-                    
-                    <!-- password field -->
-                    <!-- <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>User Password</mat-label>
-                        <input
-                        required
-                        [(ngModel)]="user.password"
-                        name="password"
-                         type="password" matInput placeholder="Enter here">                                              
-                      </mat-form-field> -->
-                      
-                    <!-- firstName field -->
+                <form *ngIf="user" #profileForm="ngForm" (ngSubmit)="updateData()">
+                    <div class="picture-picker text-center">
+                        <img [src]="picturePreview || (user.profile && user.profile !== 'default.png' ? user.profile : '../../../assets/logo.jpg')"
+                             class="profile-image" alt="Profile picture preview">
+                        <label for="profilePicture" class="picture-label">Choose profile picture</label>
+                        <input #pictureInput id="profilePicture" type="file" accept="image/jpeg,image/png,image/gif,image/webp"
+                               (change)="onPictureSelected($event)">
+                        <small>JPG, PNG, GIF, or WEBP. Maximum 5 MB.</small>
+                    </div>
+
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>First Name</mat-label>
-                        <input
-                        required
-                       
-                        name="firstName"
-                        matInput placeholder="Enter here">                                              
-                      </mat-form-field>
-                      
-                    <!-- lastName field -->
+                        <input matInput name="firstName" [(ngModel)]="user.firstName" required maxlength="100">
+                    </mat-form-field>
+
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Last Name</mat-label>
-                        <input
-                        required
-                        
-                        name="lastName"
-                        matInput placeholder="Enter here">                                              
-                      </mat-form-field>
-                      
-                    <!-- email field -->
+                        <input matInput name="lastName" [(ngModel)]="user.lastName" required maxlength="100">
+                    </mat-form-field>
+
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>Email Address</mat-label>
-                        <input
-                        required
-                       
-                        name="email"
-                        type="email" matInput placeholder="Enter here">                                              
-                      </mat-form-field>
-                      
-                    <!-- phone field -->
+                        <input matInput name="email" type="email" [(ngModel)]="user.email" required email maxlength="150">
+                    </mat-form-field>
+
                     <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>Phone</mat-label>
-                        <input
-                        required
-                        
-                        name="phone"
-                        type="number" matInput placeholder="Enter here">                                              
-                      </mat-form-field>
-                      
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput name="phone" type="tel" [(ngModel)]="user.phone" required maxlength="25">
+                    </mat-form-field>
+
                     <div class="container text-center">
-                        <button disabled type="submit" mat-raised-button color="primary">Update</button>
-                        <button disabled class="ml20" type="reset"  mat-raised-button color="accent">Clear</button>
+                        <button type="submit" mat-raised-button color="primary"
+                                [disabled]="profileForm.invalid || saving">
+                            {{ saving ? 'Saving...' : 'Update Profile' }}
+                        </button>
+                        <button type="button" class="ml20" mat-raised-button color="accent"
+                                [disabled]="saving" (click)="clearForm(pictureInput)">Clear</button>
                     </div>
                 </form>
             </mat-card-content>
