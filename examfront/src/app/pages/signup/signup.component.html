@@ -8,10 +8,9 @@
                 <div class="container text-center">
                     <img src="../../../assets/logo.jpg" alt="">
                 </div>
-                <h1 class="text-center">Register Here !!</h1>
-                <!-- {{user | json}} -->
+                <h1 class="text-center">{{ otpSent ? 'Verify Your Email' : 'Register Here' }}</h1>
 
-                <form (ngSubmit)="formSubmit()">
+                <form #signupForm="ngForm" (ngSubmit)="formSubmit()">
                     <!-- username field -->
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>User Name</mat-label>
@@ -19,7 +18,7 @@
                         required 
                         [(ngModel)]="user.userName"
                         name="userName"                        
-                        matInput placeholder="Enter here">  
+                        matInput placeholder="Enter here" [disabled]="otpSent" maxlength="100">  
                         <mat-hint>User name must be unique !!</mat-hint>                                            
                     </mat-form-field>
                     
@@ -30,7 +29,7 @@
                         required
                         [(ngModel)]="user.password"
                         name="password"
-                         type="password" matInput placeholder="Enter here">                                              
+                         type="password" matInput placeholder="Enter here" [disabled]="otpSent" maxlength="72">                                              
                       </mat-form-field>
                       
                     <!-- firstName field -->
@@ -40,7 +39,7 @@
                         required
                         [(ngModel)]="user.firstName"
                         name="firstName"
-                        matInput placeholder="Enter here">                                              
+                        matInput placeholder="Enter here" [disabled]="otpSent" maxlength="100">                                              
                       </mat-form-field>
                       
                     <!-- lastName field -->
@@ -50,7 +49,7 @@
                         required
                         [(ngModel)]="user.lastName"
                         name="lastName"
-                        matInput placeholder="Enter here">                                              
+                        matInput placeholder="Enter here" [disabled]="otpSent" maxlength="100">                                              
                       </mat-form-field>
                       
                     <!-- email field -->
@@ -60,7 +59,7 @@
                         required
                         [(ngModel)]="user.email"
                         name="email"
-                        type="email" matInput placeholder="Enter here">                                              
+                        type="email" matInput placeholder="Enter here" [disabled]="otpSent" maxlength="150">                                              
                       </mat-form-field>
                       
                     <!-- phone field -->
@@ -70,12 +69,24 @@
                         required
                         [(ngModel)]="user.phone"
                         name="phone"
-                        type="number" matInput placeholder="Enter here">                                              
+                        type="tel" matInput placeholder="Enter here" [disabled]="otpSent" maxlength="25">                                              
                       </mat-form-field>
+
+                    <mat-form-field *ngIf="otpSent" class="full-width" appearance="outline">
+                        <mat-label>Email verification code</mat-label>
+                        <input matInput name="otp" [(ngModel)]="otp" inputmode="numeric"
+                               autocomplete="one-time-code" maxlength="6" required>
+                        <mat-hint>Enter the six-digit code sent to {{user.email}}.</mat-hint>
+                    </mat-form-field>
                       
                     <div class="container text-center">
-                        <button type="submit" mat-raised-button color="primary">Register</button>
-                        <button class="ml20" type="reset"  mat-raised-button color="accent">Clear</button>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="submitting">
+                            {{ submitting ? 'Please wait...' : (otpSent ? 'Verify and Register' : 'Send Verification Code') }}
+                        </button>
+                        <button *ngIf="otpSent" class="ml20" type="button" mat-raised-button
+                                [disabled]="submitting" (click)="sendOtp()">Resend Code</button>
+                        <button class="ml20" type="button" mat-raised-button color="accent"
+                                [disabled]="submitting" (click)="resetRegistration()">Edit Details</button>
                     </div>
                 </form>
             </mat-card-content>

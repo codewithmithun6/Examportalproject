@@ -2,21 +2,19 @@ package com.exam.controller;
 
 
 import com.exam.helper.UserFoundException;
-import com.exam.model.Role;
 import com.exam.model.User;
-import com.exam.model.UserRole;
 import com.exam.passwordhandler.ChangePasswordRequest;
 import com.exam.passwordhandler.ProfileUpdateRequest;
+import com.exam.registration.RegistrationOtpRequest;
+import com.exam.registration.RegistrationRequest;
+import com.exam.service.RegistrationVerificationService;
 import com.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/user")
@@ -27,38 +25,41 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private RegistrationVerificationService registrationVerificationService;
 
     @GetMapping("/home")
     public String home(){
         return "Welcome to exam portal";
     }
 
-    // creating user
-
     @PostMapping("/")
-    public User createUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<String> createUserWithoutVerification() {
+        return ResponseEntity.status(HttpStatus.GONE)
+                .body("Email verification is required. Use the registration verification steps.");
+    }
 
-        user.setProfile("default.png");
+    @PostMapping("/registration/send-otp")
+    public ResponseEntity<String> sendRegistrationOtp(@RequestBody RegistrationRequest request) {
+        try {
+            registrationVerificationService.sendOtp(request);
+            return ResponseEntity.ok("Verification code sent to your email address");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ex.getMessage());
+        }
+    }
 
-        // encoding password with bCryptPasswordEncoder
-        user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
-
-        Set<UserRole> roles = new HashSet<>();
-
-        Role role = new Role();
-        role.setRoleId(45L);
-        role.setRoleName("NORMAL");
-
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(role);
-
-        roles.add(userRole);
-
-        return this.userService.createUser(user,roles);
-
-
+    @PostMapping("/registration/verify-otp")
+    public ResponseEntity<String> verifyRegistrationOtp(@RequestBody RegistrationOtpRequest request) {
+        try {
+            registrationVerificationService.verifyAndRegister(request.getEmail(), request.getOtp());
+            return ResponseEntity.ok("Email verified and account registered successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Unable to complete registration. Please request a new code.");
+        }
     }
 
     // get user by username

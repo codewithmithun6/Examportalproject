@@ -15,6 +15,14 @@ export class UserService {
 
   }
 
+  public sendRegistrationOtp(user: any){
+    return this.http.post(`${baseUrl}/user/registration/send-otp`, user, { responseType: 'text' });
+  }
+
+  public verifyRegistrationOtp(email: string, otp: string){
+    return this.http.post(`${baseUrl}/user/registration/verify-otp`, { email, otp }, { responseType: 'text' });
+  }
+
   //update user
   public updateUser(user:any){
     return this.http.post(`${baseUrl}/user/`,user);
