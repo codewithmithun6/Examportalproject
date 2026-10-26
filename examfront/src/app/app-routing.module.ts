@@ -80,6 +80,10 @@ const routes: Routes = [
         component: WelcomeComponent,
       },
       {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+      },
+      {
         path: 'profile',
         component: ProfileComponent,
       },
