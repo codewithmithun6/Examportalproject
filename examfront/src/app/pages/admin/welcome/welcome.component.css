@@ -1,0 +1,143 @@
+.admin-welcome {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 30px 26px 52px;
+	color: #203436;
+}
+
+.admin-hero {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+	align-items: center;
+	gap: 34px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #c5d0ca;
+}
+
+.eyebrow {
+	margin: 0 0 10px;
+	color: #a64c35;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.admin-copy h1 {
+	max-width: 580px;
+	margin: 0;
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 42px;
+	font-weight: 500;
+	line-height: 1.12;
+}
+
+.intro {
+	max-width: 590px;
+	margin: 16px 0 20px;
+	color: #506363;
+	line-height: 1.65;
+}
+
+.admin-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.admin-actions mat-icon {
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+.admin-image {
+	display: block;
+	width: 100%;
+	height: 290px;
+	border-radius: 4px;
+	object-fit: cover;
+}
+
+.admin-workflow {
+	padding-top: 25px;
+}
+
+.admin-workflow h2 {
+	margin: 0;
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 28px;
+	font-weight: 500;
+}
+
+.workflow-steps {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 22px;
+	margin-top: 21px;
+}
+
+.workflow-steps article {
+	min-width: 0;
+	padding-top: 13px;
+	border-top: 3px solid #c27655;
+}
+
+.workflow-steps article > span {
+	color: #a64c35;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.workflow-steps h3 {
+	margin: 8px 0;
+	font-size: 16px;
+}
+
+.workflow-steps p {
+	min-height: 68px;
+	margin: 0 0 12px;
+	color: #506363;
+	line-height: 1.5;
+}
+
+.workflow-steps a {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	color: #17635d;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.workflow-steps a mat-icon {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+}
+
+@media (max-width: 760px) {
+	.admin-welcome {
+		padding: 22px 16px 36px;
+	}
+
+	.admin-hero {
+		grid-template-columns: 1fr;
+		gap: 22px;
+	}
+
+	.admin-copy h1 {
+		font-size: 32px;
+	}
+
+	.admin-image {
+		height: 230px;
+	}
+
+	.workflow-steps {
+		grid-template-columns: 1fr;
+		gap: 18px;
+	}
+
+	.workflow-steps p {
+		min-height: 0;
+	}
+}

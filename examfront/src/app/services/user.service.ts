@@ -23,6 +23,23 @@ export class UserService {
     return this.http.post(`${baseUrl}/user/registration/verify-otp`, { email, otp }, { responseType: 'text' });
   }
 
+  public sendPasswordRecoveryOtp(email: string){
+    return this.http.post(`${baseUrl}/user/password-recovery/send-otp`, { email }, { responseType: 'text' });
+  }
+
+  public verifyPasswordRecoveryOtp(email: string, otp: string){
+    return this.http.post(`${baseUrl}/user/password-recovery/verify-otp`, { email, otp }, { responseType: 'text' });
+  }
+
+  public resetForgottenPassword(request: {
+    email: string;
+    resetToken: string;
+    newPassword: string;
+    confirmPassword: string;
+  }){
+    return this.http.post(`${baseUrl}/user/password-recovery/reset`, request, { responseType: 'text' });
+  }
+
   //update user
   public updateUser(user:any){
     return this.http.post(`${baseUrl}/user/`,user);
