@@ -1,7 +1,48 @@
-<div class="bootstrap-wrapper">
-    <div class="text-center mt20">
-        <h1 >Welcome to ADMIN pannel..</h1>
-    </div>
-    
-    
-</div>
+<main class="admin-welcome">
+    <section class="admin-hero">
+        <div class="admin-copy">
+            <p class="eyebrow">Administrator workspace</p>
+            <h1>Build a well-organized exam experience.</h1>
+            <p class="intro">
+                Start by arranging subjects into categories, then create quizzes and add questions.
+                Review your quiz list whenever you need to update content or check what is available.
+            </p>
+            <div class="admin-actions">
+                <a mat-raised-button color="primary" routerLink="/admin/categories">
+                    <mat-icon>list_alt</mat-icon> Manage categories
+                </a>
+                <a mat-stroked-button routerLink="/admin/quizzes">
+                    <mat-icon>quiz</mat-icon> Review quizzes
+                </a>
+            </div>
+        </div>
+        <img class="admin-image"
+             src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=85"
+             alt="Administrator planning and reviewing work at a desk">
+    </section>
+
+    <section class="admin-workflow" aria-labelledby="workflow-title">
+        <p class="eyebrow">Your workflow</p>
+        <h2 id="workflow-title">Three steps to publish a quiz</h2>
+        <div class="workflow-steps">
+            <article>
+                <span>01</span>
+                <h3>Organize subjects</h3>
+                <p>Create or update categories so learners can find the right practice material.</p>
+                <a routerLink="/admin/add-category">Add a category <mat-icon>arrow_forward</mat-icon></a>
+            </article>
+            <article>
+                <span>02</span>
+                <h3>Create the quiz</h3>
+                <p>Set its title, description, category, question count, and maximum marks.</p>
+                <a routerLink="/admin/add-quiz">Create a quiz <mat-icon>arrow_forward</mat-icon></a>
+            </article>
+            <article>
+                <span>03</span>
+                <h3>Add and maintain questions</h3>
+                <p>Write questions, review the quiz, and update content as your course changes.</p>
+                <a routerLink="/admin/quizzes">Open quiz list <mat-icon>arrow_forward</mat-icon></a>
+            </article>
+        </div>
+    </section>
+</main>

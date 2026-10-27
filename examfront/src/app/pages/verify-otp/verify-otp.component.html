@@ -1,20 +1,23 @@
 <mat-card>
-    <h1 class="text-center mt20">Please verify your OTP which is sent on your registered email address</h1>
+    <h1 class="text-center mt20">Verify the code sent to {{email}}</h1>
     <!-- {{ emailAddress | json }} -->
     
     <mat-card-content>
         <div class="bootstrap-wrapper">
             <div class="row">
                 <div class="col-md-6 offset-md-4">
-                    <form (ngSubmit)="formSubmit()">
+                    <form #otpForm="ngForm" (ngSubmit)="formSubmit()">
                         <mat-form-field class="w100" appearance="outline">
                             <mat-label>Enter OTP</mat-label>
                             <input
                             autofocus 
-                            type="number" 
+                            type="text"
+                            inputmode="numeric"
+                            autocomplete="one-time-code"
+                            maxlength="6"
                             name="OTP"                                                       
                             matInput placeholder="Enter OTP"
-                            [(ngModel)]="OTP"                          
+                            [(ngModel)]="OTP"
                             
                             required
                             >                            
@@ -22,19 +25,17 @@
                        
 
                         <div class="container text-center mt15">
-                            <button mat-raised-button color="accent">Verify OTP</button>
-                            <a [routerLink]="'/forget-password'" style="margin-left: 20px" mat-raised-button color="warn">Resend</a>
+                            <button mat-raised-button color="accent" [disabled]="otpForm.invalid || submitting">
+                                {{ submitting ? 'Verifying...' : 'Verify OTP' }}
+                            </button>
+                            <button type="button" style="margin-left: 20px" mat-raised-button color="warn"
+                                    [disabled]="submitting" (click)="resendCode()">Resend</button>
                         </div>
 
                         
 
                     </form>
 
-                    <!-- <div class="container text-center">
-                        
-                        <button style="margin-left: 250px" mat-raised-button color="warn">Resend</button>
-                    </div> -->
-                    
                 </div>
             </div>
         </div>
