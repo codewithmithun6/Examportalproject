@@ -1,7 +1,8 @@
 import { LocationStrategy } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from 'src/app/services/question.service';
+import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './start.component.html',
   styleUrls: ['./start.component.css']
 })
-export class StartComponent implements OnInit{
+export class StartComponent implements OnInit, OnDestroy{
   [x: string]: any;
 
   qid:any;
@@ -19,18 +20,24 @@ export class StartComponent implements OnInit{
   correctAnswers=0;
   attempted = 0;
   isSubmit=false;
+  user: any;
 
   timer:any;
+  private timerInterval: any;
+  private evaluationStarted = false;
+  private previousDocumentTitle = '';
 
   constructor(
     private locationSt: LocationStrategy,
     private _route: ActivatedRoute,
-    private _question: QuestionService
+    private _question: QuestionService,
+    private login: LoginService
   ){}
   ngOnInit(): void {
 
     this.preventBackButton();
     this.qid = this._route.snapshot.params['qid'];
+    this.user = this.login.getUser();
     console.log(this.qid);
     this.loadQuestions();
     
@@ -81,11 +88,11 @@ export class StartComponent implements OnInit{
   }
 
   startTimer(){
-    let t = window.setInterval(()=>{
+    this.timerInterval = window.setInterval(()=>{
       //code
       if(this.timer<=0){
         this.evalQuiz();
-        clearInterval(t);
+        clearInterval(this.timerInterval);
       }else{
         this.timer--;
       }
@@ -100,13 +107,14 @@ export class StartComponent implements OnInit{
   }
 
   evalQuiz(){
-    // this.isSubmit = true;
-    //     //calculations
-    // call to server to eval 
+    if (this.evaluationStarted || !this.questions?.length) {
+      return;
+    }
+    this.evaluationStarted = true;
+    clearInterval(this.timerInterval);
+
     this._question.evalQuiz(this.questions).subscribe(
       (data:any)=>{
-        console.log(data);
-
         this.marksGot = parseFloat(Number(data.marksGot).toFixed(2));
         this.correctAnswers = data.correctAnswers;
         this.attempted = data.attempted;
@@ -114,29 +122,38 @@ export class StartComponent implements OnInit{
 
       },
       (error)=>{
-        console.log(error);
+        this.evaluationStarted = false;
+        Swal.fire('Unable to submit quiz', 'Please check your connection and submit again.', 'error');
       }
     );
-
-    //     this.questions.forEach((q:any)=>{
-    //       if(q.givenAnswer==q.answer){
-    //         this.correctAnswers++;
-    //         let marksSingle = this.questions[0].quiz.maxMarks / this.questions.length;
-    //         this.marksGot += marksSingle;
-    //       }
-
-    //       if(q.givenAnswer.trim()!=''){
-    //         this.attempted++;
-    //       }
-
-    //     });
-        // console.log('Correect Answer: '+this.correctAnswers);
-        // console.log('Marks Got: '+this.marksGot);
-        // console.log(this.questions);
-
   }
+
+  get quiz(): any {
+    return this.questions?.[0]?.quiz;
+  }
+
+  get subjectName(): string {
+    return this.quiz?.category?.title || 'Subject not available';
+  }
+
+  get fullName(): string {
+    return [this.user?.firstName, this.user?.lastName].filter(Boolean).join(' ') || this.user?.userName || 'Learner';
+  }
+
   public printPage(){
+    this.previousDocumentTitle = document.title;
+    document.title = `Quiz Result - ${this.quiz?.title || 'Exam Portal'}`;
+    document.body.classList.add('printing-quiz-result');
+    window.addEventListener('afterprint', () => {
+      document.body.classList.remove('printing-quiz-result');
+      document.title = this.previousDocumentTitle;
+    }, { once: true });
     window.print();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timerInterval);
+    document.body.classList.remove('printing-quiz-result');
   }
 
   }

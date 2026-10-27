@@ -46,3 +46,36 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .ml40{
     margin-left: 40px !important;
 }
+
+@media print {
+    body.printing-quiz-result app-root > * {
+        visibility: hidden !important;
+    }
+
+    body.printing-quiz-result .quiz-result-print-area,
+    body.printing-quiz-result .quiz-result-print-area * {
+        visibility: visible !important;
+    }
+
+    body.printing-quiz-result .quiz-result-print-area {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    body.printing-quiz-result .result-sheet {
+        max-width: none !important;
+        margin: 0 auto !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    body.printing-quiz-result .no-print {
+        display: none !important;
+    }
+}
