@@ -83,6 +83,9 @@ public class RegistrationVerificationService {
         } catch (MailException ex) {
             pendingRegistrations.remove(email, pending);
             throw new IllegalStateException("Unable to send verification email. Check SMTP settings and try again.", ex);
+        } catch (RuntimeException ex) {
+            pendingRegistrations.remove(email, pending);
+            throw new IllegalStateException("Unable to send verification email. Check SMTP settings and try again.", ex);
         }
     }
 

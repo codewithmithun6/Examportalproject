@@ -1,5 +1,14 @@
 <div class="bootstrap-wrapper">
     <div class="container-fluid">
+        <section class="learner-welcome" *ngIf="catId == 0">
+            <div class="learner-copy">
+                <p class="eyebrow">Your learner dashboard</p>
+                <h1>Choose a quiz. Take your next step.</h1>
+                <p>Browse all active quizzes or pick a subject from the sidebar. Open the instructions before you start, then review your result when you finish.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=85"
+                 alt="Student preparing notes before an exam">
+        </section>
         <h1 class="mt20">Available Quizzes</h1>
         <div class="row" *ngIf="quizzes">
             <div class="col-md-4" *ngFor="let q of quizzes">

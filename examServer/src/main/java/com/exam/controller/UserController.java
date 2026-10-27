@@ -7,6 +7,8 @@ import com.exam.passwordhandler.ChangePasswordRequest;
 import com.exam.passwordhandler.ProfileUpdateRequest;
 import com.exam.registration.RegistrationOtpRequest;
 import com.exam.registration.RegistrationRequest;
+import com.exam.registration.PasswordRecoveryRequest;
+import com.exam.service.PasswordRecoveryService;
 import com.exam.service.RegistrationVerificationService;
 import com.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class UserController {
 
     @Autowired
     private RegistrationVerificationService registrationVerificationService;
+
+    @Autowired
+    private PasswordRecoveryService passwordRecoveryService;
 
     @GetMapping("/home")
     public String home(){
@@ -59,6 +64,38 @@ public class UserController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Unable to complete registration. Please request a new code.");
+        }
+    }
+
+    @PostMapping("/password-recovery/send-otp")
+    public ResponseEntity<String> sendPasswordRecoveryOtp(@RequestBody PasswordRecoveryRequest request) {
+        try {
+            passwordRecoveryService.sendOtp(request.getEmail());
+            return ResponseEntity.ok("If an account exists for that email, a reset code has been sent.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/password-recovery/verify-otp")
+    public ResponseEntity<String> verifyPasswordRecoveryOtp(@RequestBody PasswordRecoveryRequest request) {
+        try {
+            return ResponseEntity.ok(passwordRecoveryService.verifyOtp(request.getEmail(), request.getOtp()));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/password-recovery/reset")
+    public ResponseEntity<String> resetForgottenPassword(@RequestBody PasswordRecoveryRequest request) {
+        try {
+            passwordRecoveryService.resetPassword(
+                    request.getEmail(), request.getResetToken(), request.getNewPassword(), request.getConfirmPassword());
+            return ResponseEntity.ok("Password reset successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
