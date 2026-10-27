@@ -9,9 +9,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class SidebarComponent implements OnInit{
 
   constructor(public login:LoginService){}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  ngOnInit(): void {}
 
 
 

@@ -6,6 +6,7 @@ import com.exam.model.Role;
 import com.exam.model.User;
 import com.exam.model.UserRole;
 import com.exam.passwordhandler.ChangePasswordRequest;
+import com.exam.passwordhandler.ProfileUpdateRequest;
 import com.exam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -90,24 +91,31 @@ public class UserController {
     }
 
 
-    //change password handler
-//    @PutMapping("/change-password")
-//    public void changePassword(@RequestBody User user) {
-//        System.out.println(user.getPassword());
-//
-//        this.userService.changePassword(user);
-//
-//    }
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request, Principal principal) {
+        try {
+            userService.changePassword(
+                    principal.getName(),
+                    request.getOldPassword(),
+                    request.getNewPassword(),
+                    request.getConfirmPassword());
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+    }
 
-//Change user password
-@PostMapping("/change-password")
-public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
-    // You may want to perform additional validation and security checks here
-
-    userService.changePassword(request.getUsername(), request.getOldPassword(), request.getNewPassword());
-
-    return ResponseEntity.ok("Password changed successfully");
-}
+    @PutMapping(value = "/profile", consumes = "multipart/form-data")
+    public ResponseEntity<String> updateCurrentProfile(@ModelAttribute ProfileUpdateRequest request, Principal principal) {
+        try {
+            userService.updateProfile(principal.getName(), request);
+            return ResponseEntity.ok("Profile updated successfully");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unable to save profile picture");
+        }
+    }
 
 
     @ExceptionHandler(UserFoundException.class)

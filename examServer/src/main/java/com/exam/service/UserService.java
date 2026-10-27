@@ -2,6 +2,7 @@ package com.exam.service;
 
 import com.exam.model.User;
 import com.exam.model.UserRole;
+import com.exam.passwordhandler.ProfileUpdateRequest;
 
 import java.security.Principal;
 import java.util.Set;
@@ -26,7 +27,9 @@ public interface UserService {
 
     User getUserById(Long userId);
 
-    public void changePassword(String username, String oldPassword, String newPassword);
+    public void changePassword(String username, String oldPassword, String newPassword, String confirmPassword);
+
+    void updateProfile(String username, ProfileUpdateRequest request);
 
 
 }
