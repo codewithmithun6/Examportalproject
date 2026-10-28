@@ -39,6 +39,14 @@ export class QuestionService {
 
   }
 
+  public getMyAttempts(){
+    return this._http.get<any[]>(`${baseUrl}/question/attempts`);
+  }
+
+  public getAllAttempts(){
+    return this._http.get<any[]>(`${baseUrl}/question/attempts/all`);
+  }
+
   // update question
   public updateQuestion(question:any){
     return this._http.put(`${baseUrl}/question/`,question);

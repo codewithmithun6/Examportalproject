@@ -1,0 +1,46 @@
+<main class="attempt-history">
+    <header class="history-header">
+        <div>
+            <p class="eyebrow">Learner records</p>
+            <h1>Quiz attempt history</h1>
+        </div>
+        <span class="record-count">{{attempts.length}} attempts</span>
+    </header>
+
+    <p *ngIf="loading">Loading your attempt history...</p>
+    <p class="error-message" *ngIf="loadError">Unable to load quiz history. Please refresh and try again.</p>
+    <p class="empty-message" *ngIf="!loading && !loadError && attempts.length === 0">
+        No completed quizzes yet. Your results will appear here after you submit a quiz.
+    </p>
+
+    <div class="table-scroll" *ngIf="!loading && attempts.length > 0">
+        <table>
+            <thead>
+                <tr>
+                    <th>Completed</th>
+                    <th>Subject</th>
+                    <th>Quiz</th>
+                    <th>Marks</th>
+                    <th>Correct</th>
+                    <th>Attempted</th>
+                    <th>Unattempted</th>
+                    <th>Wrong</th>
+                    <th>Percent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let attempt of attempts">
+                    <td>{{attempt.completedAt | date:'medium'}}</td>
+                    <td>{{attempt.subjectName}}</td>
+                    <td>{{attempt.quizTitle}}</td>
+                    <td>{{attempt.marksGot}} / {{attempt.totalMarks}}</td>
+                    <td>{{attempt.correctAnswers}}</td>
+                    <td>{{attempt.attemptedQuestions}}</td>
+                    <td>{{attempt.unattemptedQuestions}}</td>
+                    <td>{{attempt.wrongAnswers}}</td>
+                    <td>{{attempt.percentage | number:'1.0-2'}}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

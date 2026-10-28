@@ -17,8 +17,13 @@ export class StartComponent implements OnInit, OnDestroy{
   questions:any;
 
   marksGot=0;
+  totalMarks=0;
   correctAnswers=0;
   attempted = 0;
+  unattempted = 0;
+  wrongAnswers = 0;
+  percentage = 0;
+  attemptId: number | null = null;
   isSubmit=false;
   user: any;
 
@@ -116,8 +121,13 @@ export class StartComponent implements OnInit, OnDestroy{
     this._question.evalQuiz(this.questions).subscribe(
       (data:any)=>{
         this.marksGot = parseFloat(Number(data.marksGot).toFixed(2));
+        this.totalMarks = Number(data.totalMarks ?? this.quiz?.maxMarks ?? 0);
         this.correctAnswers = data.correctAnswers;
-        this.attempted = data.attempted;
+        this.attempted = data.attemptedQuestions ?? data.attempted;
+        this.unattempted = data.unattemptedQuestions ?? Math.max(0, this.questions.length - this.attempted);
+        this.wrongAnswers = data.wrongAnswers ?? Math.max(0, this.attempted - this.correctAnswers);
+        this.percentage = Number(data.percentage ?? (this.totalMarks > 0 ? this.marksGot * 100 / this.totalMarks : 0));
+        this.attemptId = data.attemptId ?? null;
         this.isSubmit = true;
 
       },
