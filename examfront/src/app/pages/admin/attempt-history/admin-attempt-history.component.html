@@ -1,0 +1,56 @@
+<main class="attempt-history">
+    <header class="history-header">
+        <div>
+            <p class="eyebrow">Assessment records</p>
+            <h1>Quiz attempts</h1>
+        </div>
+        <span class="record-count">{{attempts.length}} attempts</span>
+    </header>
+
+    <p *ngIf="loading">Loading quiz attempts...</p>
+    <p class="error-message" *ngIf="loadError">Unable to load quiz attempts. Please refresh and try again.</p>
+    <p class="empty-message" *ngIf="!loading && !loadError && attempts.length === 0">No submitted quizzes have been recorded yet.</p>
+
+    <div class="table-scroll" *ngIf="!loading && attempts.length > 0">
+        <table>
+            <thead>
+                <tr>
+                    <th>Attempt ID</th>
+                    <th>Completed</th>
+                    <th>User ID</th>
+                    <th>Learner</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Quiz</th>
+                    <th>Marks</th>
+                    <th>Total Questions</th>
+                    <th>Correct</th>
+                    <th>Attempted</th>
+                    <th>Unattempted</th>
+                    <th>Wrong</th>
+                    <th>Percent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let attempt of attempts">
+                    <td>{{attempt.attemptId}}</td>
+                    <td>{{attempt.completedAt | date:'medium'}}</td>
+                    <td>{{attempt.userId}}</td>
+                    <td>{{attempt.learnerName || attempt.userName}}</td>
+                    <td>{{attempt.userName}}</td>
+                    <td>{{attempt.email}}</td>
+                    <td>{{attempt.subjectName}}</td>
+                    <td>{{attempt.quizTitle}}</td>
+                    <td>{{attempt.marksGot}} / {{attempt.totalMarks}}</td>
+                    <td>{{attempt.totalQuestions}}</td>
+                    <td>{{attempt.correctAnswers}}</td>
+                    <td>{{attempt.attemptedQuestions}}</td>
+                    <td>{{attempt.unattemptedQuestions}}</td>
+                    <td>{{attempt.wrongAnswers}}</td>
+                    <td>{{attempt.percentage | number:'1.0-2'}}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

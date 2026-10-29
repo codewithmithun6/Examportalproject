@@ -26,6 +26,8 @@ import { ChangePasswordComponent } from './pages/user/change-password/change-pas
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { VerifyOtpComponent } from './pages/verify-otp/verify-otp.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { AttemptHistoryComponent } from './pages/user/attempt-history/attempt-history.component';
+import { AdminAttemptHistoryComponent } from './pages/admin/attempt-history/admin-attempt-history.component';
 
 const routes: Routes = [
   {
@@ -88,6 +90,10 @@ const routes: Routes = [
         component: ProfileComponent,
       },
       {
+        path: 'attempts',
+        component: AdminAttemptHistoryComponent,
+      },
+      {
         path: 'categories',
         component: ViewCategoriesComponent,
       },
@@ -139,6 +145,10 @@ const routes: Routes = [
       {
         path: 'user-profile',
         component:UserProfileComponent
+      },
+      {
+        path: 'attempts',
+        component: AttemptHistoryComponent
       },
 
       {

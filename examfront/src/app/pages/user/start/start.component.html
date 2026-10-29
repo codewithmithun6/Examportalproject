@@ -127,7 +127,7 @@ Quiz will automatically submitted when timer reaches <b>0:0</b>
                 <section class="score-grid" aria-label="Quiz score summary">
                     <article class="score-primary">
                         <span class="result-label">Marks Got</span>
-                        <strong>{{marksGot}} <small>/ {{quiz?.maxMarks ?? '—'}}</small></strong>
+                        <strong>{{marksGot}} <small>/ {{totalMarks || quiz?.maxMarks || '—'}}</small></strong>
                     </article>
                     <article>
                         <span class="result-label">Correct Answers</span>
@@ -137,11 +137,23 @@ Quiz will automatically submitted when timer reaches <b>0:0</b>
                         <span class="result-label">Questions Attempted</span>
                         <strong>{{attempted}}</strong>
                     </article>
+                    <article>
+                        <span class="result-label">Unattempted Questions</span>
+                        <strong>{{unattempted}}</strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Wrong Answers</span>
+                        <strong>{{wrongAnswers}}</strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Percentage</span>
+                        <strong>{{percentage | number:'1.0-2'}}%</strong>
+                    </article>
                 </section>
 
                 <footer class="result-footer">
                     <span>Keep practising. Every attempt builds understanding.</span>
-                    <span>Exam Portal</span>
+                    <span>Attempt reference: {{attemptId || '—'}}</span>
                 </footer>
             </section>
 
