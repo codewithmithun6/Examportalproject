@@ -78,4 +78,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     body.printing-quiz-result .no-print {
         display: none !important;
     }
+
+    body.printing-quiz-result .history-print-area {
+        display: block !important;
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: #fff !important;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
 }

@@ -1,3 +1,21 @@
 .w100{
     width: 100%;
 }
+
+.import-format,
+.selected-file {
+    color: #506363;
+    line-height: 1.5;
+}
+
+.import-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 14px 0 4px;
+}
+
+.manual-question-card {
+    margin-top: 20px;
+}

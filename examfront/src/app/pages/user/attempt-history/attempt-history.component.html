@@ -26,6 +26,7 @@
                     <th>Unattempted</th>
                     <th>Wrong</th>
                     <th>Percent</th>
+                    <th class="no-print">Result</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,8 +40,44 @@
                     <td>{{attempt.unattemptedQuestions}}</td>
                     <td>{{attempt.wrongAnswers}}</td>
                     <td>{{attempt.percentage | number:'1.0-2'}}%</td>
+                    <td class="no-print">
+                        <button mat-stroked-button color="primary" (click)="exportResult(attempt)" aria-label="Print or save this result as PDF">
+                            <mat-icon>picture_as_pdf</mat-icon> Export
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <section class="history-print-area quiz-result-print-area" *ngIf="selectedAttempt as result">
+        <header class="print-header">
+            <div>
+                <p class="print-kicker">EXAM PORTAL · ASSESSMENT REPORT</p>
+                <h1>Quiz Result</h1>
+            </div>
+            <div class="print-brand">EP</div>
+        </header>
+
+        <section class="print-identity">
+            <div><span>Learner</span><strong>{{result.learnerName || result.userName}}</strong></div>
+            <div><span>Username</span><strong>{{result.userName}}</strong></div>
+            <div><span>Email address</span><strong>{{result.email}}</strong></div>
+            <div><span>Subject</span><strong>{{result.subjectName}}</strong></div>
+            <div><span>Quiz</span><strong>{{result.quizTitle}}</strong></div>
+            <div><span>Completed</span><strong>{{result.completedAt | date:'medium'}}</strong></div>
+        </section>
+
+        <section class="print-scores">
+            <article><span>Marks Got</span><strong>{{result.marksGot}} <small>/ {{result.totalMarks}}</small></strong></article>
+            <article><span>Total Questions</span><strong>{{result.totalQuestions}}</strong></article>
+            <article><span>Correct Answers</span><strong>{{result.correctAnswers}}</strong></article>
+            <article><span>Questions Attempted</span><strong>{{result.attemptedQuestions}}</strong></article>
+            <article><span>Unattempted Questions</span><strong>{{result.unattemptedQuestions}}</strong></article>
+            <article><span>Wrong Answers</span><strong>{{result.wrongAnswers}}</strong></article>
+            <article><span>Percentage</span><strong>{{result.percentage | number:'1.0-2'}}%</strong></article>
+        </section>
+
+        <footer class="print-footer">Attempt reference: {{result.attemptId}}</footer>
+    </section>
 </main>

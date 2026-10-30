@@ -8,8 +8,34 @@
             </h1>
             <mat-card>
                 <mat-card-header>
+                    <mat-card-title>Upload questions</mat-card-title>
+                    <mat-card-subtitle>Import up to 500 questions from Excel, CSV, or tab-delimited text.</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p class="import-format">
+                        Required columns, in order: Question, Option A, Option B, Option C, Option D, Correct Answer.
+                        Correct Answer must be A, B, C, or D. Keep this order in the first worksheet or first row.
+                    </p>
+                    <div class="import-actions">
+                        <input type="file" accept=".xlsx,.csv,.txt"
+                               aria-label="Choose a question import file"
+                               (change)="onFileSelected($event)">
+                        <button type="button" mat-stroked-button color="primary" (click)="downloadTemplate()">
+                            Download CSV template
+                        </button>
+                        <button type="button" mat-raised-button color="primary"
+                                [disabled]="!selectedFile || importing" (click)="importQuestions()">
+                            {{ importing ? 'Importing...' : 'Upload questions' }}
+                        </button>
+                    </div>
+                    <p class="selected-file" *ngIf="selectedFile">Selected: {{selectedFile.name}}</p>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="manual-question-card">
+                <mat-card-header>
                     <mat-card-subtitle>
-                        Enter the details of the new question
+                        Add one question manually
                     </mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
