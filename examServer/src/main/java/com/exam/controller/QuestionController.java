@@ -3,13 +3,16 @@ package com.exam.controller;
 import com.exam.exam.Question;
 import com.exam.exam.Quiz;
 import com.exam.service.QuestionService;
+import com.exam.service.QuestionImportService;
 import com.exam.service.QuizAttemptService;
 import com.exam.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
@@ -27,11 +30,28 @@ public class QuestionController {
     @Autowired
     private QuizAttemptService quizAttemptService;
 
+    @Autowired
+    private QuestionImportService questionImportService;
+
     // add question service
 
     @PostMapping("/")
     public ResponseEntity<Question>  addQuestion(@RequestBody Question question){
         return ResponseEntity.ok(this.questionService.addQuestion(question));
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "/import/{quizId}", consumes = "multipart/form-data")
+    public ResponseEntity<?> importQuestions(@PathVariable Long quizId,
+                                             @RequestParam("file") MultipartFile file) {
+        try {
+            int importedCount = questionImportService.importQuestions(quizId, file);
+            return ResponseEntity.ok(Collections.singletonMap("importedCount", importedCount));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", ex.getMessage()));
+        } catch (IOException ex) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", "Unable to read the uploaded file"));
+        }
     }
 
     // update question

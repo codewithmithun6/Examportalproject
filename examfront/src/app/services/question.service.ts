@@ -26,6 +26,12 @@ export class QuestionService {
     return this._http.post(`${baseUrl}/question/`,question);
 
   }
+
+  public importQuestions(quizId: number, file: File){
+    const formData = new FormData();
+    formData.append('file', file);
+    return this._http.post<{ importedCount: number }>(`${baseUrl}/question/import/${quizId}`, formData);
+  }
   //delete question
 
   public deleteQuestion(questionId:any){
