@@ -1,3 +1,19 @@
+<section class="quiz-search" aria-label="Search quizzes">
+    <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search quizzes</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange($event)" (keyup.enter)="search()"
+               placeholder="Title, description, or category">
+        <button *ngIf="searchTerm" mat-icon-button matSuffix type="button"
+                aria-label="Clear search" (click)="clearSearch()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</section>
+
+<p class="search-status" *ngIf="searching">Loading quizzes...</p>
+<p class="search-status" *ngIf="!searching && searchTerm && quizzes.length === 0">No quizzes match “{{searchTerm}}”.</p>
+
 <mat-card class="mt10" *ngFor="let q of quizzes">
     <div mat-card-avatar  class="example-header-image"></div>
     <mat-card-header>
