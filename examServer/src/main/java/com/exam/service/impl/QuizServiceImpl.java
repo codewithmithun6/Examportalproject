@@ -59,4 +59,13 @@ public class QuizServiceImpl implements QuizService {
     public List<Quiz> getActiveQuizzesOfCategory(Category c) {
         return this.quizRepository.findByCategoryAndActive(c,true);
     }
+
+    @Override
+    public List<Quiz> searchQuizzes(String query) {
+        String term = query == null ? "" : query.trim();
+        if (term.isEmpty()) {
+            return this.quizRepository.findAll();
+        }
+        return this.quizRepository.searchByText(term);
+    }
 }

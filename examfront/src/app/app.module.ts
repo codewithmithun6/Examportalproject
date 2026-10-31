@@ -50,6 +50,8 @@ import { ChangePasswordComponent } from './pages/user/change-password/change-pas
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { VerifyOtpComponent } from './pages/verify-otp/verify-otp.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { AttemptHistoryComponent } from './pages/user/attempt-history/attempt-history.component';
+import { AdminAttemptHistoryComponent } from './pages/admin/attempt-history/admin-attempt-history.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
     ForgetPasswordComponent,
     VerifyOtpComponent,
     ResetPasswordComponent,
+    AttemptHistoryComponent,
+    AdminAttemptHistoryComponent,
     
   ],
   imports: [
@@ -107,6 +111,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule.forRoot({
       showForeground: true,
+      exclude: ['/quiz/search'],
     })    
   ],
   providers: [authInterceptorProviders],

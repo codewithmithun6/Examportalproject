@@ -2,3 +2,35 @@
     background-image: url('../../../../assets/examicon.png');
     background-size: cover;
   }
+
+.quiz-search {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.search-field {
+  width: min(100%, 560px);
+}
+
+.quiz-search > button {
+  min-height: 48px;
+  margin-top: 4px;
+}
+
+.search-status {
+  margin: 12px 0;
+  color: #506363;
+}
+
+@media (max-width: 600px) {
+  .quiz-search {
+    align-items: flex-start;
+  }
+
+  .search-field {
+    min-width: 0;
+    flex: 1;
+  }
+}

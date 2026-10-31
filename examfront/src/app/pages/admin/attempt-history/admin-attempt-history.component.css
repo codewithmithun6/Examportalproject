@@ -1,0 +1,72 @@
+.attempt-history {
+    padding: 22px 18px;
+    color: #203436;
+}
+
+.history-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #c7d1cd;
+}
+
+.eyebrow {
+    margin: 0 0 6px;
+    color: #a64c35;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.record-count {
+    color: #506363;
+    font-size: 13px;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+th, td {
+    padding: 11px 12px;
+    border-bottom: 1px solid #d5dedb;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    background: #edf5f2;
+    color: #174b4a;
+    font-size: 12px;
+}
+
+td {
+    color: #354b4c;
+    font-size: 13px;
+}
+
+.empty-message, .error-message {
+    padding: 18px;
+    background: #fff;
+    color: #506363;
+}
+
+.error-message {
+    color: #a33b2f;
+}

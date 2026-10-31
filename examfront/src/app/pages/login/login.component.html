@@ -11,15 +11,13 @@
                 <!-- {{loginData | json }} -->
 
                 <form (ngSubmit)="formSubmit()">
-                    <!-- username field -->
                     <mat-form-field class="full-width" appearance="outline">
-                        <mat-label>User Name</mat-label>
+                        <mat-label>Username or Email Address</mat-label>
                         <input
                         [(ngModel)]="loginData.userName"
                         name="userName"
-                        required                        
-                        name="userName"                        
-                        matInput placeholder="Enter here">                                                                     
+                        required
+                        matInput placeholder="Enter your username or email">                                                                     
                     </mat-form-field>
 
                      <!-- password field -->

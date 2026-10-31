@@ -41,22 +41,22 @@
                         <div class="row mt10">
                             <div class="col-md-6">
                                <input type="radio"  [value]="q.option1" name={{i}}  [(ngModel)]="q.givenAnswer"  /> 
-                               {{q.option1}}                                
+                               <strong>A.</strong> {{q.option1}}                                
                             </div>
                             <div class="col-md-6">
                                 <input type="radio" [value]="q.option2" name={{i}}   [(ngModel)]="q.givenAnswer"/> 
-                               {{q.option2}} 
+                               <strong>B.</strong> {{q.option2}} 
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <input type="radio" [value]="q.option3" name={{i}}   [(ngModel)]="q.givenAnswer"/> 
-                               {{q.option3}} 
+                               <strong>C.</strong> {{q.option3}} 
                             </div>
                             <div class="col-md-6">
                                 <input type="radio" [value]="q.option4" name={{i}}  [(ngModel)]="q.givenAnswer" /> 
-                               {{q.option4}} 
+                               <strong>D.</strong> {{q.option4}} 
                             </div>
                         </div>
                     </mat-card-content>
@@ -93,31 +93,76 @@ Quiz will automatically submitted when timer reaches <b>0:0</b>
 
 <!-- show results -->
 
-<div class="bootstrap-wrapper" *ngIf="isSubmit">
+<div class="bootstrap-wrapper quiz-result-print-area" *ngIf="isSubmit">
     <div class="row mt20">
-        <div class="col-md-6 offset-md-3">
-
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Quiz Result </mat-card-title>
-                </mat-card-header>
-                <mat-card-header>
-                   <mat-card-content class=" container text-center">
-                    <h1>Marks Got: <b>{{marksGot}}</b> </h1>
-                    <h1>Correct Answers: <b>{{correctAnswers}}</b> </h1>
-                    <h1>Questions Attemepted: <b>{{attempted}}</b> </h1>
-                   </mat-card-content>
-                </mat-card-header>
-                <mat-card-actions >
-                    <div class=" container text-center">
-                    <button (click)="printPage()" mat-raised-button color="primary">Print</button>
-                    <button 
-                    [routerLink]="'/user-dashboard/0'"
-                    mat-raised-button color="accent" class="ml10">Home</button>
+        <div class="col-md-8 offset-md-2">
+            <section class="result-sheet">
+                <header class="result-header">
+                    <div>
+                        <p class="result-kicker">EXAM PORTAL · ASSESSMENT REPORT</p>
+                        <h1>Quiz Result</h1>
                     </div>
-                </mat-card-actions>
-            </mat-card>
+                    <div class="result-brand">EP</div>
+                </header>
 
+                <section class="result-identity">
+                    <div>
+                        <span class="result-label">Learner</span>
+                        <strong>{{fullName}}</strong>
+                    </div>
+                    <div>
+                        <span class="result-label">Email address</span>
+                        <strong>{{user?.email || 'Not available'}}</strong>
+                    </div>
+                    <div>
+                        <span class="result-label">Subject</span>
+                        <strong>{{subjectName}}</strong>
+                    </div>
+                    <div>
+                        <span class="result-label">Quiz</span>
+                        <strong>{{quiz?.title || 'Quiz'}}</strong>
+                    </div>
+                </section>
+
+                <section class="score-grid" aria-label="Quiz score summary">
+                    <article class="score-primary">
+                        <span class="result-label">Marks Got</span>
+                        <strong>{{marksGot}} <small>/ {{totalMarks || quiz?.maxMarks || '—'}}</small></strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Correct Answers</span>
+                        <strong>{{correctAnswers}}</strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Questions Attempted</span>
+                        <strong>{{attempted}}</strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Unattempted Questions</span>
+                        <strong>{{unattempted}}</strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Wrong Answers</span>
+                        <strong>{{wrongAnswers}}</strong>
+                    </article>
+                    <article>
+                        <span class="result-label">Percentage</span>
+                        <strong>{{percentage | number:'1.0-2'}}%</strong>
+                    </article>
+                </section>
+
+                <footer class="result-footer">
+                    <span>Keep practising. Every attempt builds understanding.</span>
+                    <span>Attempt reference: {{attemptId || '—'}}</span>
+                </footer>
+            </section>
+
+            <div class="result-actions no-print">
+                <button (click)="printPage()" mat-raised-button color="primary">
+                    <mat-icon>picture_as_pdf</mat-icon> Print / Save as PDF
+                </button>
+                <button [routerLink]="'/user-dashboard/0'" mat-stroked-button color="primary">Back to quizzes</button>
+            </div>
         </div>
     </div>
 </div>

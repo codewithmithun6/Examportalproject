@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit{
       (error) => {
         console.log('Error !!');
         console.log(error);
-        this.snack.open('Incorrect Username or Password !! try again !! ', '',{
+        this.snack.open('Incorrect username/email or password. Please try again.', '',{
           duration:3000,
         });
       }

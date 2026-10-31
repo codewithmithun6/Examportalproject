@@ -3,11 +3,17 @@ package com.exam.controller;
 import com.exam.exam.Question;
 import com.exam.exam.Quiz;
 import com.exam.service.QuestionService;
+import com.exam.service.QuestionImportService;
+import com.exam.service.QuizAttemptService;
 import com.exam.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 
 @RestController
@@ -21,11 +27,31 @@ public class QuestionController {
     @Autowired
     private QuizService quizService;
 
+    @Autowired
+    private QuizAttemptService quizAttemptService;
+
+    @Autowired
+    private QuestionImportService questionImportService;
+
     // add question service
 
     @PostMapping("/")
     public ResponseEntity<Question>  addQuestion(@RequestBody Question question){
         return ResponseEntity.ok(this.questionService.addQuestion(question));
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "/import/{quizId}", consumes = "multipart/form-data")
+    public ResponseEntity<?> importQuestions(@PathVariable Long quizId,
+                                             @RequestParam("file") MultipartFile file) {
+        try {
+            int importedCount = questionImportService.importQuestions(quizId, file);
+            return ResponseEntity.ok(Collections.singletonMap("importedCount", importedCount));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", ex.getMessage()));
+        } catch (IOException ex) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", "Unable to read the uploaded file"));
+        }
     }
 
     // update question
@@ -89,29 +115,22 @@ public class QuestionController {
 
     // eval quiz
     @PostMapping("/eval-quiz")
-    public ResponseEntity<?> evalQuiz(@RequestBody List<Question> questions){
-
-        double marksGot = 0;
-        int correctAnswers = 0;
-        int attempted = 0;
-        for(Question q: questions){
-            Question question = this.questionService.get(q.getQuesId());
-            if(question.getAnswer().equals(q.getGivenAnswer()))
-            {
-                correctAnswers++;
-                double marksSingle = Double.parseDouble(questions.get(0).getQuiz().getMaxMarks())/questions.size();
-
-                marksGot += marksSingle;
-            }
-            if(q.getGivenAnswer() != ""  ){
-                attempted++;
-
-
-            }
+    public ResponseEntity<?> evalQuiz(@RequestBody List<Question> questions, Principal principal){
+        try {
+            return ResponseEntity.ok(quizAttemptService.evaluateAndSave(questions, principal.getName()));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
+    }
 
-        Map<String,Object> map = Map.of("marksGot",marksGot,"correctAnswers",correctAnswers,"attempted",attempted);
-        return ResponseEntity.ok(map);
+    @GetMapping("/attempts")
+    public ResponseEntity<?> getMyAttempts(Principal principal) {
+        return ResponseEntity.ok(quizAttemptService.getUserAttempts(principal.getName()));
+    }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/attempts/all")
+    public ResponseEntity<?> getAllAttempts() {
+        return ResponseEntity.ok(quizAttemptService.getAllAttempts());
     }
 }

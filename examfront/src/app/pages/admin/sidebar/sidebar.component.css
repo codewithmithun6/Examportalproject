@@ -1,0 +1,89 @@
+.sidebar-shell {
+	overflow: hidden;
+	padding: 0 8px 12px;
+	border: 1px solid #d6e0dc;
+	border-radius: 8px;
+	background: #fbfdfc;
+	box-shadow: 0 5px 18px rgba(27, 55, 53, 0.07);
+}
+
+.sidebar-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 -8px 12px;
+	padding: 18px 16px;
+	background: #174b4a;
+	color: #fff;
+}
+
+.sidebar-mark {
+	display: grid;
+	width: 38px;
+	height: 38px;
+	flex: 0 0 38px;
+	place-items: center;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	border-radius: 6px;
+	color: #f0c2a5;
+}
+
+.sidebar-eyebrow {
+	margin: 0 0 3px;
+	color: #bed6ce;
+	font-size: 10px;
+	font-weight: 700;
+}
+
+.sidebar-header h2 {
+	margin: 0;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.menu-section-title {
+	margin: 16px 12px 5px;
+	color: #71817e;
+	font-size: 10px;
+	font-weight: 700;
+}
+
+.sidebar-shell mat-action-list {
+	padding: 0;
+}
+
+.sidebar-shell button[mat-list-item] {
+	min-height: 42px;
+	height: auto;
+	margin: 2px 0;
+	border-radius: 5px;
+	color: #344b49;
+	font-size: 13px;
+}
+
+.sidebar-shell button[mat-list-item] mat-icon {
+	color: #55736e;
+}
+
+.sidebar-shell button[mat-list-item]:hover {
+	background: #edf5f2;
+}
+
+.sidebar-shell button.active-menu-item {
+	background: #e3f0ec;
+	color: #174b4a;
+	font-weight: 600;
+}
+
+.sidebar-shell button.active-menu-item mat-icon {
+	color: #17635d;
+}
+
+.sidebar-shell button.logout-item {
+	color: #9e4938;
+}
+
+.sidebar-shell button.logout-item mat-icon {
+	color: #a64c35;
+}

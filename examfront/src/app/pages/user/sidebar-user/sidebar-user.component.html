@@ -1,39 +1,36 @@
-<mat-card>
-    
-    <mat-action-list>
-        <button mat-list-item routerLink="/user-dashboard/user-profile/">
-            <mat-icon mat-list-icon>account_circle</mat-icon> Profile
-        </button>
-
-
-        <button mat-list-item [routerLink]="'/user-dashboard/change-password/' + userName">
-            <mat-icon mat-list-icon>settings</mat-icon> Settings
-        </button>
-
-        <!-- <a
-
-[routerLink]="'/user-dashboard/change-password'" 
-
- mat-button color="primary">Settings
- <mat-icon mat-list-icon>account_circle</mat-icon>
-</a> -->
-        
-        <div mat-suheader class="ml20">
-            
-                <h3>Available Category</h3>
-            
+<mat-card class="sidebar-shell learner-sidebar">
+    <header class="sidebar-header">
+        <span class="sidebar-mark"><mat-icon>school</mat-icon></span>
+        <div>
+            <p class="sidebar-eyebrow">EXAM PORTAL</p>
+            <h2>Learning space</h2>
         </div>
+    </header>
 
-        <button mat-list-item routerLink="/user-dashboard/0">
-            <mat-icon mat-list-icon>all_inbox</mat-icon> All Quizzes
-        </button>
+    <nav aria-label="Learner navigation">
+        <p class="menu-section-title">MY ACCOUNT</p>
+        <mat-action-list>
+            <button mat-list-item routerLink="/user-dashboard/user-profile/" routerLinkActive="active-menu-item">
+                <mat-icon mat-list-icon>account_circle</mat-icon><span>Profile</span>
+            </button>
+            <button mat-list-item routerLink="/user-dashboard/attempts" routerLinkActive="active-menu-item">
+                <mat-icon mat-list-icon>assessment</mat-icon><span>Quiz History</span>
+            </button>
+            <button mat-list-item [routerLink]="'/user-dashboard/change-password/' + userName">
+                <mat-icon mat-list-icon>settings</mat-icon><span>Settings</span>
+            </button>
+        </mat-action-list>
 
-        <button [routerLink]="'/user-dashboard/' + c.cid"
-        mat-list-item *ngFor="let c of categories">
-            <mat-icon mat-list-icon>quiz</mat-icon> {{c.title}}
-        </button>
-        
-    </mat-action-list>
+        <p class="menu-section-title category-heading">PRACTICE</p>
+        <mat-action-list>
+            <button mat-list-item routerLink="/user-dashboard/0" routerLinkActive="active-menu-item">
+                <mat-icon mat-list-icon>all_inbox</mat-icon><span>All Quizzes</span>
+            </button>
+            <button [routerLink]="'/user-dashboard/' + c.cid"
+                    routerLinkActive="active-menu-item"
+                    mat-list-item *ngFor="let c of categories">
+                <mat-icon mat-list-icon>quiz</mat-icon><span>{{c.title}}</span>
+            </button>
+        </mat-action-list>
+    </nav>
 </mat-card>
-
-<!-- {{categories | json}} -->
