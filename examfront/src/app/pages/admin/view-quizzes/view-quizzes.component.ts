@@ -1,59 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QuizService } from 'src/app/services/quiz.service';
 import Swal from 'sweetalert2';
+import { Subject, Subscription, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-quizzes',
   templateUrl: './view-quizzes.component.html',
   styleUrls: ['./view-quizzes.component.css']
 })
-export class ViewQuizzesComponent implements OnInit{
-  
-
-  quizzes:any =[
-    // {
-    //   qid:123,
-    //   title: 'Basic Java Quize',
-    //   description:'Java is a widely-used programming language for coding web applications. It has been a popular choice among developers for over two decades, with millions of Java applications in use today. Java is a multi-platform, object-oriented, and network-centric language that can be used as a platform in itself',
-    //   maxMarks:'100',
-    //   numberOfQuestions:'20',
-    //   active:'',
-    //   category:{
-    //     title:'Programming',
-
-    //   }      
-
-    // },
-    // {
-    //   qid:123,
-    //   title: 'Basic Python Quize',
-    //   description:'Java is a widely-used programming language for coding web applications. It has been a popular choice among developers for over two decades, with millions of Java applications in use today. Java is a multi-platform, object-oriented, and network-centric language that can be used as a platform in itself',
-    //   maxMarks:'100',
-    //   numberOfQuestions:'20',
-    //   active:'',
-    //   category:{
-    //     title:'Programming',
-
-    //   }      
-
-    // }
-  ];
+export class ViewQuizzesComponent implements OnInit, OnDestroy{
+  quizzes: any[] = [];
+  searchTerm = '';
+  searching = false;
+  private readonly searchChanges = new Subject<string>();
+  private searchSubscription?: Subscription;
 
   constructor(private _quiz:QuizService){}
   ngOnInit(): void {
-
-    this._quiz.quizzes().subscribe(
-      (data:any)=>{
-        this.quizzes =data;
-        console.log(this.quizzes);
-      },
-      (error)=>{
-        console.log(error);
-        Swal.fire('Error !!', 'Error in loading data !!', 'error');
-
+    this.searchSubscription = this.searchChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((query) => this._quiz.searchQuizzes(query).pipe(
+        catchError(() => {
+          this.searching = false;
+          Swal.fire('Search failed', 'Unable to search quizzes. Please try again.', 'error');
+          return of(null);
+        })
+      ))
+    ).subscribe((data) => {
+      if (data) {
+        this.quizzes = data;
       }
-    );
-    
+      this.searching = false;
+    });
+    this.searchChanges.next('');
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
+  }
+
+  search(): void {
+    this.searching = true;
+    this.searchChanges.next(this.searchTerm.trim());
+  }
+
+  onSearchTermChange(value: string): void {
+    this.searchTerm = value;
+    this.search();
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.search();
   }
 
   // delete quiz

@@ -16,6 +16,10 @@ export class QuizService {
     return this._http.get(`${baseUrl}/quiz/`);
   }
 
+  public searchQuizzes(query: string){
+    return this._http.get<any[]>(`${baseUrl}/quiz/search`, { params: { query } });
+  }
+
   // add quiz
   public addQuiz(quiz:any){
     return this._http.post(`${baseUrl}/quiz/`,quiz);

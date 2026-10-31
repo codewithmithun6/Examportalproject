@@ -111,6 +111,7 @@ import { AdminAttemptHistoryComponent } from './pages/admin/attempt-history/admi
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule.forRoot({
       showForeground: true,
+      exclude: ['/quiz/search'],
     })    
   ],
   providers: [authInterceptorProviders],

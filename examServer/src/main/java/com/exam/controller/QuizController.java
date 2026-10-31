@@ -5,6 +5,7 @@ import com.exam.exam.Quiz;
 import com.exam.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,12 @@ public class QuizController {
     @GetMapping("/")
     public ResponseEntity<?> getQuizzes(){
         return ResponseEntity.ok(this.quizService.getQuizzes());
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/search")
+    public ResponseEntity<?> searchQuizzes(@RequestParam(name = "query", defaultValue = "") String query){
+        return ResponseEntity.ok(this.quizService.searchQuizzes(query));
     }
 
     // get single quiz
