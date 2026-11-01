@@ -1,0 +1,269 @@
+user end
+----------------
+1. Change password
+2. forget password
+3. update profile
+	First Name
+	Last Name
+	Email id
+	Mobile number
+	Profile picture
+	
+
+-------------
+
+admin side
+-----------
+1. update profile --> not required update profile
+
+
+
+GitHub copilot prompt
+----------------------Important Prompt--------------------------
+
+user end and admin end
+----------------
+Change password
+
+Analyse the code frontend and backend create required folder packages classes both  end backed and frontend
+
+Enter old password
+Enter new password
+Enter confirm password
+
+this functionality wants to achieve and maintain the existing functionality don't effect on existing one
+code change in both side backed and frontend make it runnable and optimized
+
+
+--------------------------------------------------------------
+
+user end
+
+update profile
+	First Name
+	Last Name
+	Email id
+	Mobile number
+	Profile picture
+please provide the update code backend end frontend
+don't change any existing functionality and  maintain it
+write the code in optimized way.
+
+---------------
+
+For user end and admin both end
+----------
+
+forget password
+
+forget the password if user has been forget password
+1. click on forget password.
+2. Enter registered email id
+3.click on sent OTP on registered email id
+4. enter OTP then click on verify OTP. and Resend button to again sent OTP if not receive the user
+5. after that enter change password and confirm password and then click on reset button.
+
+please provide the code backed and frontend both.
+
+without changing any existing functionality and maintain the functionality and optimize the code.
+
+We have email id and app password for email
+
+----------------------------------------------------
+
+For user end and admin both end.
+
+while registering the user send OTP on entered email id and verify the users then register the user
+without verifying don't register the user.
+
+please provide the code backed and frontend both.
+
+without changing any existing functionality and maintain the functionality and optimize the code
+
+We have email id and app password for email
+
+
+------------------------------------------------
+Analyse the code give the proper paragraph and sentence.
+
+Home page and Admin Home page
+
+put understandable details that can user and admin can understand after login what they have to do.
+
+what activity user will do and what activity admin will do after loging.
+
+Put attractive page also put good image on both user side and admin home page.
+
+keep maintain functionality don't change any functionality.
+
+
+--------------------------------------
+Quiz result update
+-------------------------
+Analyse the code
+after submitted the quiz in the quiz result should show
+Full name of the user 
+email id of the user
+subject name which subject has given the test
+
+Marks Got:
+Correct Answers: 
+Questions Attempted:
+
+print proper PDF format neat and clean.
+
+
+------------------------------------------
+
+Analyse the code backend and frontend
+currently only able to login with username
+do the changes Login with username or email id both.
+
+maintain functionality don't changes any existing functionality.
+
+
+------------------------------------
+
+Analyse the frontend UI
+create documentation in word file(.docs)
+put there steps by steps and if possible then put screenshots of the UI
+
+
+-------------------------------------------------------------
+
+Analyse the code backend and frontend.
+
+we have to keep the record into database which user has been given the test
+1. Total marks
+2. which subject has has attempted
+3. int total marks how much they got
+4. how many aatempt.
+5. how many unattempt
+6. how many wrongs
+7. % also
+
+and from your thinking anything you want to ass then u can add.
+
+maintain functionality don't changes any existing functionality.
+
+
+
+--------------------------------------------------------------
+
+Analyse the code backend and frontend.
+
+whatever store the data into database after given test
+
+make page on admin side user show data into table format only admin can see the user data
+Admin can see all details 
+
+1. Total marks
+2. which subject has has attempted
+3. int total marks how much they got
+4. how many aatempt.
+5. how many unattempt
+6. how many wrongs
+7. % also
+8. user details also like name, email, username
+
+and from your side thinking anything you want to add then u can add.
+
+maintain functionality don't changes any existing functionality.
+
+
+---------------------------------------------
+
+change the name Quiz attempts to All user test results in the sidebar
+
+------------------------------------------------
+Analyse the code backend and frontend.
+
+
+in the admin side we are adding question manually one by one
+
+is it possible to add more option upload the questions like pdf or excel or text file format which is more fusible that can we do and then display.
+
+so, both option will be there manually add questions and by uploading.
+
+
+------------------------------------------
+
+in the user side whenever they are giving the test 
+He can see only option only radio button add  there A,B C,B then it will more readable.
+
+maintain functionality don't changes any existing functionality.
+
+
+-------------------------------------------
+After submitted the test that time he is able to export the result.
+
+if he will not export the result same time then from the history can we able to download the result ?
+
+make the changes.
+maintain functionality don't changes any existing functionality.
+------------------------------------------------------
+
+
+from frontend end side Menu bar should be attractive make changes from both side admin and user end
+
+maintain functionality don't changes any existing functionality.
+
+---------------------------------------------------------------------
+
+create 20 each subject question in csv
+
+Python programming
+Microservices
+sports
+4.Database MongoDB
+
+-----------------------------------------
+Menu bar or sidebar changes.
+
+don't move Menu bar or side bar with page it should move separate with scroll bar.
+implement this things both side user and admin side.
+
+maintain functionality don't changes any existing functionality.
+
+-------------------------------------------------------------------
+implement on Attempt button.
+
+in the admin end click on attempt button then redirect to All users test result.
+also optimize the code.
+
+maintain functionality don't changes any existing functionality.
+
+------------------------------------------
+Implement on search bar at Admin end. (Frontend and backed)
+
+in quizzes page search bar to search using title or descripts or category.
+
+also optimize the code.
+
+maintain functionality don't changes any existing functionality.
+
+
+-----------------------------------------------------------------
+please search automatically when entering character the start searching
+
+it always refreshing the page can you do it should not see the page load of user every time while searching
+remove search button that is not required right?
+
+--------------------------------------------------------
+Analyse the code and provide the details in readme.md file.
+summarized the details steps by steps of this project and how it will work.
+required details also put from your end.
+
+--------------------------------------------------
+
+based on database design create ER diagram clear clean and understandable.
+
+
+
+
+
+
+
+
+
+
