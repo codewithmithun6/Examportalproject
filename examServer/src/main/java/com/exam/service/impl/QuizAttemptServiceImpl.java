@@ -8,8 +8,11 @@ import com.exam.repository.QuizAttemptRepository;
 import com.exam.repository.UserRepository;
 import com.exam.service.QuestionService;
 import com.exam.service.QuizAttemptService;
+import com.exam.service.QuizResultNotificationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -23,13 +26,16 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
     private final QuestionService questionService;
     private final UserRepository userRepository;
     private final QuizAttemptRepository attemptRepository;
+    private final QuizResultNotificationService resultNotificationService;
 
     public QuizAttemptServiceImpl(QuestionService questionService,
                                   UserRepository userRepository,
-                                  QuizAttemptRepository attemptRepository) {
+                                  QuizAttemptRepository attemptRepository,
+                                  QuizResultNotificationService resultNotificationService) {
         this.questionService = questionService;
         this.userRepository = userRepository;
         this.attemptRepository = attemptRepository;
+        this.resultNotificationService = resultNotificationService;
     }
 
     @Override
@@ -109,6 +115,7 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
         attempt.setCompletedAt(LocalDateTime.now());
 
         QuizAttempt saved = attemptRepository.save(attempt);
+        notifyAfterCommit(saved);
         Map<String, Object> result = new HashMap<>();
         result.put("attemptId", saved.getAttemptId());
         result.put("marksGot", saved.getMarksGot());
@@ -120,6 +127,20 @@ public class QuizAttemptServiceImpl implements QuizAttemptService {
         result.put("wrongAnswers", saved.getWrongAnswers());
         result.put("percentage", saved.getPercentage());
         return result;
+    }
+
+    private void notifyAfterCommit(QuizAttempt attempt) {
+        if (!TransactionSynchronizationManager.isSynchronizationActive()) {
+            resultNotificationService.sendResult(attempt);
+            return;
+        }
+
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                resultNotificationService.sendResult(attempt);
+            }
+        });
     }
 
     @Override
