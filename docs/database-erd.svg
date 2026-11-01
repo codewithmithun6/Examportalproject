@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1040" viewBox="0 0 1240 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Exam Portal Database Entity Relationship Diagram</title>
+  <desc id="desc">Seven JPA entities. User and role connect through user_role. Categories contain quizzes, quizzes contain questions. Quiz attempts store user and quiz snapshots without foreign keys.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f4f7f5; }
+      .title { font: 700 28px Arial, sans-serif; fill: #174b4a; }
+      .subtitle { font: 14px Arial, sans-serif; fill: #526461; }
+      .entity { fill: #ffffff; stroke: #17635d; stroke-width: 2; rx: 8; }
+      .entity-head { fill: #174b4a; }
+      .entity-title { font: 700 17px Arial, sans-serif; fill: #ffffff; }
+      .field { font: 13px Consolas, monospace; fill: #263d3c; }
+      .key { font: 700 13px Consolas, monospace; fill: #a64c35; }
+      .line { fill: none; stroke: #17635d; stroke-width: 2.5; }
+      .snapshot { fill: none; stroke: #a64c35; stroke-width: 2; stroke-dasharray: 8 6; }
+      .relation { font: 12px Arial, sans-serif; fill: #385553; }
+      .note { font: 13px Arial, sans-serif; fill: #495e5c; }
+      .note-box { fill: #fff8f2; stroke: #d7a17f; stroke-width: 1.5; rx: 6; }
+      .legend { font: 12px Arial, sans-serif; fill: #495e5c; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#17635d"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1240" height="1040"/>
+  <text class="title" x="40" y="46">Exam Portal · Database ER Diagram</text>
+  <text class="subtitle" x="40" y="72">Logical model from the project's JPA entities · keys and relationships shown explicitly</text>
+
+  <!-- Core entity relationships -->
+  <path class="line" d="M290 193 H385" marker-end="url(#arrow)"/>
+  <text class="relation" x="311" y="180">1 to many</text>
+  <path class="line" d="M635 168 H725" marker-end="url(#arrow)"/>
+  <text class="relation" x="660" y="154">many to 1</text>
+  <path class="line" d="M290 520 H385" marker-end="url(#arrow)"/>
+  <text class="relation" x="310" y="507">1 to many</text>
+  <path class="line" d="M655 540 H730" marker-end="url(#arrow)"/>
+  <text class="relation" x="671" y="527">1 to many</text>
+
+  <!-- USERS -->
+  <g transform="translate(40 105)">
+    <rect class="entity" width="250" height="300"/>
+    <path class="entity-head" d="M48 0 H202 A8 8 0 0 1 210 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">USERS</text>
+    <text class="key" x="16" y="68">PK  id : BIGINT</text>
+    <text class="field" x="16" y="94">userName : VARCHAR</text>
+    <text class="field" x="16" y="120">password : VARCHAR</text>
+    <text class="field" x="16" y="146">firstName : VARCHAR</text>
+    <text class="field" x="16" y="172">lastName : VARCHAR</text>
+    <text class="field" x="16" y="198">email : VARCHAR</text>
+    <text class="field" x="16" y="224">phone : VARCHAR</text>
+    <text class="field" x="16" y="250">enable : BOOLEAN</text>
+    <text class="field" x="16" y="276">profile : VARCHAR</text>
+  </g>
+
+  <!-- USER_ROLE -->
+  <g transform="translate(385 105)">
+    <rect class="entity" width="250" height="160"/>
+    <path class="entity-head" d="M48 0 H202 A8 8 0 0 1 210 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">USER_ROLE</text>
+    <text class="key" x="16" y="72">PK  userRoleId : BIGINT</text>
+    <text class="key" x="16" y="102">FK  user_id : BIGINT</text>
+    <text class="key" x="16" y="132">FK  role_roleId : BIGINT</text>
+  </g>
+
+  <!-- ROLES -->
+  <g transform="translate(725 105)">
+    <rect class="entity" width="230" height="130"/>
+    <path class="entity-head" d="M48 0 H182 A8 8 0 0 1 190 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">ROLES</text>
+    <text class="key" x="16" y="72">PK  roleId : BIGINT</text>
+    <text class="field" x="16" y="102">roleName : VARCHAR</text>
+  </g>
+
+  <!-- CATEGORY -->
+  <g transform="translate(40 465)">
+    <rect class="entity" width="250" height="150"/>
+    <path class="entity-head" d="M48 0 H202 A8 8 0 0 1 210 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">CATEGORY</text>
+    <text class="key" x="16" y="72">PK  cid : BIGINT</text>
+    <text class="field" x="16" y="102">title : VARCHAR</text>
+    <text class="field" x="16" y="132">description : TEXT</text>
+  </g>
+
+  <!-- QUIZ -->
+  <g transform="translate(385 430)">
+    <rect class="entity" width="270" height="250"/>
+    <path class="entity-head" d="M48 0 H222 A8 8 0 0 1 230 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">QUIZ</text>
+    <text class="key" x="16" y="68">PK  qId : BIGINT</text>
+    <text class="field" x="16" y="96">title : VARCHAR</text>
+    <text class="field" x="16" y="124">description : TEXT</text>
+    <text class="field" x="16" y="152">maxMarks : VARCHAR</text>
+    <text class="field" x="16" y="180">numberOfQuestions : VARCHAR</text>
+    <text class="field" x="16" y="208">active : BOOLEAN</text>
+    <text class="key" x="16" y="236">FK  category_cid : BIGINT</text>
+  </g>
+
+  <!-- QUESTION -->
+  <g transform="translate(730 430)">
+    <rect class="entity" width="300" height="280"/>
+    <path class="entity-head" d="M48 0 H252 A8 8 0 0 1 260 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">QUESTION</text>
+    <text class="key" x="16" y="68">PK  quesId : BIGINT</text>
+    <text class="field" x="16" y="96">content : TEXT</text>
+    <text class="field" x="16" y="124">image : VARCHAR</text>
+    <text class="field" x="16" y="152">option1..option4 : VARCHAR</text>
+    <text class="field" x="16" y="180">answer : VARCHAR</text>
+    <text class="key" x="16" y="208">FK  quiz_qId : BIGINT</text>
+    <text class="field" x="16" y="246">givenAnswer : TRANSIENT</text>
+    <text class="relation" x="16" y="267">(not persisted)</text>
+  </g>
+
+  <!-- Attempt snapshots: no FK relationships by design -->
+  <path class="snapshot" d="M165 405 C165 710 340 810 400 825"/>
+  <path class="snapshot" d="M520 680 V790"/>
+  <text class="relation" x="90" y="700">snapshot only</text>
+  <text class="relation" x="530" y="745">snapshot only</text>
+  <g transform="translate(300 800)">
+    <rect class="entity" width="650" height="190"/>
+    <path class="entity-head" d="M48 0 H602 A8 8 0 0 1 610 8 V42 H0 V8 A8 8 0 0 1 8 0 Z"/>
+    <text class="entity-title" x="16" y="27">QUIZ_ATTEMPT · HISTORICAL RESULT SNAPSHOT</text>
+    <text class="key" x="18" y="70">PK  attemptId : BIGINT</text>
+    <text class="field" x="18" y="98">userId, userName, learnerName, email (snapshot values; no FK)</text>
+    <text class="field" x="18" y="126">quizId, quizTitle, subjectName (snapshot values; no FK)</text>
+    <text class="field" x="18" y="154">totalQuestions, totalMarks, marksGot, correct / attempted / unattempted / wrong</text>
+    <text class="field" x="18" y="180">percentage : DOUBLE     completedAt : TIMESTAMP</text>
+  </g>
+
+  <rect class="note-box" x="40" y="850" width="230" height="110"/>
+  <text class="note" x="56" y="878">Solid connectors are JPA</text>
+  <text class="note" x="56" y="899">foreign-key relationships.</text>
+  <line class="line" x1="58" y1="923" x2="102" y2="923"/>
+  <text class="legend" x="111" y="928">FK relation</text>
+  <line class="snapshot" x1="58" y1="946" x2="102" y2="946"/>
+  <text class="legend" x="111" y="951">snapshot only</text>
+</svg>
